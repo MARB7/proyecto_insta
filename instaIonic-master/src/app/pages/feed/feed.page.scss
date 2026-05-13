@@ -1,0 +1,86 @@
+.feed-toolbar {
+  --min-height: 50px;
+}
+
+.feed-title {
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.toolbar-center {
+  position: absolute;
+  left: 15%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stories-circles {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-right: 4px;
+}
+
+/* Reducir el relleno de los botones del toolbar para que quepan mejor en el móvil */
+ion-button {
+  --padding-start: 4px;
+  --padding-end: 4px;
+}
+
+.circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &.empty {
+    background: #e0e0e0;
+    border-color: #ccc;
+  }
+}
+
+.header-initials {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* Responsive fixes for mobile devices */
+@media (max-width: 500px) {
+  .circle {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stories-circles {
+    gap: 2px;
+  }
+}
+
+@media (max-width: 450px) {
+  .stories-circles .circle:nth-of-type(n+3) {
+    display: none;
+    /* Hide 3rd and 4th circle on small screens */
+  }
+}
+
+@media (max-width: 380px) {
+  .stories-circles {
+    display: none;
+    /* Hide all circles on very small screens to avoid breaking layout */
+  }
+}

@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Amigos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/feed"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Buscador por nombre -->
+  <ion-searchbar
+    placeholder="Buscar usuario por nombre..."
+    (ionInput)="onSearch($event)"
+    [debounce]="300"
+  ></ion-searchbar>
+
+  <!-- Mensaje de estado -->
+  <ion-item *ngIf="message" lines="none">
+    <ion-label [color]="messageColor" class="ion-text-wrap">
+      {{ message }}
+    </ion-label>
+  </ion-item>
+
+  <!-- Resultados de búsqueda -->
+  <ion-list *ngIf="searchResults.length > 0">
+    <ion-item lines="full">
+      <ion-label><strong>Resultados</strong></ion-label>
+    </ion-item>
+    <ion-item *ngFor="let user of searchResults">
+      <ion-icon name="person-add" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.email }}</p>
+      </ion-label>
+      <ion-button size="small" color="primary" (click)="sendRequest(user)">
+        Agregar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Solicitudes pendientes -->
+  <ion-list>
+    <ion-item lines="full">
+      <ion-label><strong>Pendientes</strong></ion-label>
+      <ion-badge color="warning" slot="end" *ngIf="pending.length > 0">{{ pending.length }}</ion-badge>
+    </ion-item>
+    <ion-item *ngFor="let r of pending">
+      <ion-label>
+        {{ r.user?.profile?.username || r.user?.name }}
+      </ion-label>
+      <ion-button size="small" color="success" (click)="accept(r)">
+        <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+        Aceptar
+      </ion-button>
+    </ion-item>
+    <ion-item *ngIf="pending.length === 0">
+      <ion-label color="medium">No hay solicitudes pendientes</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Amigos -->
+  <ion-list>
+    <ion-item lines="full">
+      <ion-label><strong>Mis Amigos</strong></ion-label>
+      <ion-badge color="primary" slot="end" *ngIf="friends.length > 0">{{ friends.length }}</ion-badge>
+    </ion-item>
+    <ion-item *ngFor="let f of friends">
+      <ion-icon name="people" slot="start" color="success"></ion-icon>
+      <ion-label>
+        {{ f.profile?.username || f.name }}
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="friends.length === 0">
+      <ion-label color="medium">Aún no tienes amigos, ¡busca y agrega!</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

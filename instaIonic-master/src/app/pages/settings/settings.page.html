@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar class="feed-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/feed"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ajustes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <div style="text-align: center; margin-bottom: 20px;">
+    <ion-avatar style="width: 120px; height: 120px; margin: 0 auto; margin-bottom: 15px; border: 2px solid #ccc;">
+      <img *ngIf="preview" [src]="preview" />
+      <img *ngIf="!preview" src="https://placehold.co/120x120?text=Perfil" />
+    </ion-avatar>
+
+    <input type="file" #fileInput (change)="onFileChange($event)" accept="image/*" hidden />
+    <ion-button fill="outline" (click)="fileInput.click()">Subir Archivo</ion-button>
+    <ion-button fill="outline" (click)="takePhoto()">Tomar Foto</ion-button>
+  </div>
+
+  <ion-item>
+    <ion-input label="Nombre" labelPlacement="floating" [(ngModel)]="name" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input label="Correo Electrónico (Gmail)" labelPlacement="floating" [(ngModel)]="email" type="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input label="Nueva Contraseña" labelPlacement="floating" [(ngModel)]="password" type="password" placeholder="Dejar en blanco para no cambiar"></ion-input>
+  </ion-item>
+
+  <div class="ion-margin-top">
+    <ion-button expand="block" (click)="save()">Guardar Cambios</ion-button>
+  </div>
+
+</ion-content>
