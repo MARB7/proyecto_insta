@@ -2,17 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton, IonButtons, IonBackButton, IonAvatar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonInput, IonButton, IonButtons, IonBackButton, IonAvatar, IonIcon } from '@ionic/angular/standalone';
 import { Api } from '../../services/api';
 import { Auth } from '../../services/auth';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { addIcons } from 'ionicons';
+import { cameraOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonAvatar, IonBackButton, IonButtons, IonButton, IonInput, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonAvatar, IonBackButton, IonButtons, IonButton, IonInput, IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, CommonModule, FormsModule]
 })
 export class SettingsPage implements OnInit {
 
@@ -24,7 +26,9 @@ export class SettingsPage implements OnInit {
   preview?: string;
   base = environment.storageUrl;
 
-  constructor(private api: Api, private auth: Auth) { }
+  constructor(private api: Api, private auth: Auth) {
+    addIcons({ cameraOutline });
+  }
 
   ngOnInit() {
     this.loadUser();

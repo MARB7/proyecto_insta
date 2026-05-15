@@ -1,0 +1,179 @@
+.login-content {
+  --background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 24px 20px;
+}
+
+/* ── Brand ── */
+.brand {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.brand-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(224, 54, 100, 0.35);
+
+  ion-icon {
+    font-size: 36px;
+    color: #fff;
+  }
+}
+
+.brand-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+  letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+}
+
+/* ── Segment ── */
+.auth-segment {
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 24px;
+  --background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  animation: fadeInUp 0.5s ease-out 0.1s both;
+
+  ion-segment-button {
+    --indicator-color: linear-gradient(135deg, #e6683c, #cc2366);
+    --color: rgba(255, 255, 255, 0.55);
+    --color-checked: #fff;
+    --indicator-box-shadow: 0 2px 12px rgba(204, 35, 102, 0.4);
+    font-weight: 600;
+    min-height: 42px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+}
+
+/* ── Form Card ── */
+.form-card {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 28px 22px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: fadeInUp 0.5s ease-out 0.2s both;
+}
+
+.register-fields {
+  animation: fadeInUp 0.35s ease-out;
+}
+
+/* ── Inputs ── */
+.input-group {
+  position: relative;
+  margin-bottom: 18px;
+
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .custom-input {
+    --background: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.12);
+    --border-radius: 12px;
+    --color: #fff;
+    --placeholder-color: rgba(255, 255, 255, 0.35);
+    --highlight-color-focused: #cc2366;
+    --padding-start: 42px;
+    font-size: 15px;
+  }
+}
+
+/* ── Error ── */
+.error-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(235, 68, 90, 0.15);
+  border: 1px solid rgba(235, 68, 90, 0.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  animation: shake 0.4s ease-out;
+
+  ion-icon {
+    font-size: 20px;
+    color: #eb445a;
+    flex-shrink: 0;
+  }
+
+  span {
+    font-size: 13px;
+    color: #ff8a9b;
+    line-height: 1.4;
+  }
+}
+
+/* ── Submit ── */
+.submit-btn {
+  --background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  --background-hover: linear-gradient(135deg, #e6683c, #dc2743, #cc2366);
+  --border-radius: 14px;
+  --box-shadow: 0 6px 24px rgba(204, 35, 102, 0.35);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+  height: 50px;
+  margin-top: 4px;
+  text-transform: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ── Animations ── */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}

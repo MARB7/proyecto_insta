@@ -1,21 +1,112 @@
-<ion-header><ion-toolbar><ion-title>Mini Instagram</ion-title></ion-toolbar></ion-header>
-<ion-content class="ion-padding">
-  <ion-segment [(ngModel)]="isRegister">
-    <ion-segment-button [value]="false"><ion-label>Ingresar</ion-label></ion-segment-button>
-    <ion-segment-button [value]="true"><ion-label>Registrar</ion-label></ion-segment-button>
-  </ion-segment>
+<ion-content class="login-content" [scrollY]="true">
+  <div class="login-wrapper">
 
-  <div *ngIf="isRegister">
-    <ion-item><ion-input label="Nombre" [(ngModel)]="name"></ion-input></ion-item>
-    <ion-item><ion-input label="Usuario" [(ngModel)]="username"></ion-input></ion-item>
+    <!-- Logo / Brand -->
+    <div class="brand">
+      <div class="brand-icon">
+        <ion-icon name="camera-outline"></ion-icon>
+      </div>
+      <h1 class="brand-title">Mini Instagram</h1>
+      <p class="brand-subtitle">Comparte tus momentos favoritos</p>
+    </div>
+
+    <!-- Segment Toggle -->
+    <ion-segment [(ngModel)]="mode" class="auth-segment">
+      <ion-segment-button value="login">
+        <ion-label>Ingresar</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="register">
+        <ion-label>Registrar</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Form Card -->
+    <div class="form-card">
+
+      <!-- Register-only fields -->
+      <div *ngIf="isRegister" class="register-fields">
+        <div class="input-group">
+          <ion-icon name="person-outline" class="input-icon"></ion-icon>
+          <ion-input
+            fill="outline"
+            label="Nombre completo"
+            labelPlacement="floating"
+            [(ngModel)]="name"
+            type="text"
+            class="custom-input">
+          </ion-input>
+        </div>
+
+        <div class="input-group">
+          <ion-icon name="at-outline" class="input-icon"></ion-icon>
+          <ion-input
+            fill="outline"
+            label="Nombre de usuario"
+            labelPlacement="floating"
+            [(ngModel)]="username"
+            type="text"
+            class="custom-input">
+          </ion-input>
+        </div>
+      </div>
+
+      <!-- Shared fields -->
+      <div class="input-group">
+        <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+        <ion-input
+          fill="outline"
+          label="Correo electrónico"
+          labelPlacement="floating"
+          [(ngModel)]="email"
+          type="email"
+          class="custom-input">
+        </ion-input>
+      </div>
+
+      <div class="input-group">
+        <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+        <ion-input
+          fill="outline"
+          label="Contraseña"
+          labelPlacement="floating"
+          [(ngModel)]="password"
+          type="password"
+          class="custom-input">
+        </ion-input>
+      </div>
+
+      <!-- Confirm password (register only) -->
+      <div class="input-group" *ngIf="isRegister">
+        <ion-icon name="shield-checkmark-outline" class="input-icon"></ion-icon>
+        <ion-input
+          fill="outline"
+          label="Confirmar contraseña"
+          labelPlacement="floating"
+          [(ngModel)]="passwordConfirm"
+          type="password"
+          class="custom-input">
+        </ion-input>
+      </div>
+
+      <!-- Error message -->
+      <div class="error-box" *ngIf="error">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>{{ error }}</span>
+      </div>
+
+      <!-- Submit button -->
+      <ion-button
+        expand="block"
+        shape="round"
+        (click)="submit()"
+        [disabled]="loading"
+        class="submit-btn">
+        <ion-icon *ngIf="!loading" [name]="isRegister ? 'person-add-outline' : 'log-in-outline'" slot="start"></ion-icon>
+        <ion-spinner *ngIf="loading" name="crescent" slot="start"></ion-spinner>
+        {{ isRegister ? 'Crear cuenta' : 'Entrar' }}
+      </ion-button>
+
+    </div>
+
   </div>
-
-  <ion-item><ion-input label="Email" [(ngModel)]="email"></ion-input></ion-item>
-  <ion-item><ion-input label="Password" type="password" [(ngModel)]="password"></ion-input></ion-item>
-
-  <ion-button expand="block" (click)="submit()">
-    {{ isRegister ? 'Crear cuenta' : 'Entrar' }}
-  </ion-button>
-
-  <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
 </ion-content>

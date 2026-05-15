@@ -1,23 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButton, IonImg, IonButtons, IonBackButton, IonIcon, IonCol, IonGrid, IonRow } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonButton, IonImg, IonButtons, IonBackButton, IonIcon } from '@ionic/angular/standalone';
 import { Api } from '../../services/api';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 import { addIcons } from 'ionicons';
-import { camera, fileTray, cloudUpload } from 'ionicons/icons';
+import { camera, fileTray, cloudUpload, imageOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-new-post',
   templateUrl: './new-post.page.html',
   styleUrls: ['./new-post.page.scss'],
   standalone: true,
-  imports: [IonRow, 
-    IonGrid, IonCol, IonIcon, IonBackButton, IonImg, IonHeader, 
-    IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButton, FormsModule, IonButtons, CommonModule,
-    IonGrid, IonCol
+  imports: [IonIcon, IonBackButton, IonImg, IonHeader,
+    IonToolbar, IonTitle, IonContent, IonInput, IonButton, FormsModule, IonButtons, CommonModule
   ]
 })
 export class NewPostPage implements OnInit {
@@ -27,7 +25,7 @@ export class NewPostPage implements OnInit {
   preview?: string;
 
   constructor(private api: Api, private router: Router) {
-    addIcons({camera,fileTray,cloudUpload,});
+    addIcons({camera,fileTray,cloudUpload,imageOutline});
   }
   
   ngOnInit() {}

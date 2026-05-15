@@ -1,40 +1,58 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Nuevo post</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/feed"></ion-back-button>
-    </ion-buttons>  
+    </ion-buttons>
+    <ion-title>Nueva publicación</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-item>
-    <ion-input label="Descripción" [(ngModel)]="caption"></ion-input>
-  </ion-item>
+<ion-content>
+  <div class="newpost-container">
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-button expand="block" (click)="takePhoto()">
-          <ion-icon name="camera" size="large"></ion-icon>
-          Usar cámara
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="block" (click)="fileInput.click()">
-          <ion-icon name="file-tray" size="large"></ion-icon>
-          Elegir archivo
-        </ion-button>
-        <input #fileInput type="file" accept="image/*" hidden (change)="onFileChange($event)" />
-      </ion-col>
-      <ion-col><ion-button expand="block" (click)="upload()">
-        <ion-icon name="cloud-upload" size="large"></ion-icon>
-        Publicar
-      </ion-button></ion-col>
-    </ion-row>
-  </ion-grid>
+    <!-- Preview area -->
+    <div class="preview-area">
+      <ion-img *ngIf="preview" [src]="preview" class="preview-img"></ion-img>
+      <div class="preview-placeholder" *ngIf="!preview">
+        <ion-icon name="image-outline" class="placeholder-icon"></ion-icon>
+        <p>Selecciona una imagen</p>
+      </div>
+    </div>
 
-  <ion-img *ngIf="preview" [src]="preview" style="margin-top:16px;border-radius:12px;"></ion-img>
+    <!-- Caption -->
+    <div class="caption-section">
+      <ion-input
+        fill="outline"
+        label="Descripción"
+        labelPlacement="floating"
+        [(ngModel)]="caption"
+        class="caption-input">
+      </ion-input>
+    </div>
 
+    <!-- Action buttons -->
+    <div class="action-grid">
+      <button class="action-card" (click)="takePhoto()">
+        <ion-icon name="camera" class="action-icon camera-icon"></ion-icon>
+        <span>Cámara</span>
+      </button>
+      <button class="action-card" (click)="fileInput.click()">
+        <ion-icon name="image-outline" class="action-icon gallery-icon"></ion-icon>
+        <span>Galería</span>
+      </button>
+      <input #fileInput type="file" accept="image/*" hidden (change)="onFileChange($event)" />
+    </div>
 
+    <!-- Publish button -->
+    <ion-button
+      expand="block"
+      shape="round"
+      (click)="upload()"
+      [disabled]="!file"
+      class="publish-btn">
+      <ion-icon name="cloud-upload" slot="start"></ion-icon>
+      Publicar
+    </ion-button>
+
+  </div>
 </ion-content>

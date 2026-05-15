@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-toolbar class="feed-toolbar">
+<ion-header class="ion-no-border">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/feed"></ion-back-button>
     </ion-buttons>
@@ -7,33 +7,71 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  
-  <div style="text-align: center; margin-bottom: 20px;">
-    <ion-avatar style="width: 120px; height: 120px; margin: 0 auto; margin-bottom: 15px; border: 2px solid #ccc;">
-      <img *ngIf="preview" [src]="preview" />
-      <img *ngIf="!preview" src="https://placehold.co/120x120?text=Perfil" />
-    </ion-avatar>
+<ion-content>
+  <div class="settings-container">
 
-    <input type="file" #fileInput (change)="onFileChange($event)" accept="image/*" hidden />
-    <ion-button fill="outline" (click)="fileInput.click()">Subir Archivo</ion-button>
-    <ion-button fill="outline" (click)="takePhoto()">Tomar Foto</ion-button>
+    <!-- Avatar section -->
+    <div class="avatar-section">
+      <div class="avatar-wrapper">
+        <ion-avatar class="profile-avatar">
+          <img *ngIf="preview" [src]="preview" />
+          <img *ngIf="!preview" src="https://placehold.co/120x120?text=Perfil" />
+        </ion-avatar>
+        <div class="avatar-overlay" (click)="fileInput.click()">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+      </div>
+      <input type="file" #fileInput (change)="onFileChange($event)" accept="image/*" hidden />
+      <div class="avatar-actions">
+        <ion-button fill="outline" shape="round" size="small" (click)="fileInput.click()" class="avatar-btn">
+          Subir Archivo
+        </ion-button>
+        <ion-button fill="outline" shape="round" size="small" (click)="takePhoto()" class="avatar-btn">
+          Tomar Foto
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-section">
+      <div class="form-group">
+        <ion-input
+          fill="outline"
+          label="Nombre"
+          labelPlacement="floating"
+          [(ngModel)]="name"
+          type="text"
+          class="settings-input">
+        </ion-input>
+      </div>
+
+      <div class="form-group">
+        <ion-input
+          fill="outline"
+          label="Correo electrónico"
+          labelPlacement="floating"
+          [(ngModel)]="email"
+          type="email"
+          class="settings-input">
+        </ion-input>
+      </div>
+
+      <div class="form-group">
+        <ion-input
+          fill="outline"
+          label="Nueva contraseña"
+          labelPlacement="floating"
+          [(ngModel)]="password"
+          type="password"
+          placeholder="Dejar en blanco para no cambiar"
+          class="settings-input">
+        </ion-input>
+      </div>
+
+      <ion-button expand="block" shape="round" (click)="save()" class="save-btn">
+        Guardar Cambios
+      </ion-button>
+    </div>
+
   </div>
-
-  <ion-item>
-    <ion-input label="Nombre" labelPlacement="floating" [(ngModel)]="name" type="text"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-input label="Correo Electrónico (Gmail)" labelPlacement="floating" [(ngModel)]="email" type="email"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-input label="Nueva Contraseña" labelPlacement="floating" [(ngModel)]="password" type="password" placeholder="Dejar en blanco para no cambiar"></ion-input>
-  </ion-item>
-
-  <div class="ion-margin-top">
-    <ion-button expand="block" (click)="save()">Guardar Cambios</ion-button>
-  </div>
-
 </ion-content>

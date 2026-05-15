@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.101.5:8000/api/',
-  storageUrl: 'http://192.168.101.5:8000/storage/'
+  apiUrl: 'http://localhost:8000/api/',
+  storageUrl: 'http://localhost:8000/storage/'
 };
 
 /*

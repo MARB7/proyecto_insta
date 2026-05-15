@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonButtons, IonBackButton, IonSearchbar, IonIcon, IonNote, IonBadge } from '@ionic/angular/standalone';
-import { NgFor, NgIf } from '@angular/common';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonBackButton, IonSearchbar, IonIcon, IonBadge, IonInput } from '@ionic/angular/standalone';
 import { Api } from '../../services/api';
 import { addIcons } from 'ionicons';
-import { personAdd, checkmarkCircle, people } from 'ionicons/icons';
+import { personAdd, checkmarkCircle, people, timeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.page.html',
   styleUrls: ['./friends.page.scss'],
   standalone: true,
-  imports: [IonBadge, IonNote, IonIcon, IonSearchbar, IonButtons, IonButton, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, NgFor, NgIf, IonBackButton, FormsModule]
+  imports: [IonIcon, IonSearchbar, IonButtons, IonButton, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, CommonModule, FormsModule]
 })
 export class FriendsPage implements OnInit {
 
@@ -24,7 +23,7 @@ export class FriendsPage implements OnInit {
   messageColor = '';
 
   constructor(private api: Api) {
-    addIcons({ personAdd, checkmarkCircle, people });
+    addIcons({ personAdd, checkmarkCircle, people, timeOutline });
   }
 
   ngOnInit() {

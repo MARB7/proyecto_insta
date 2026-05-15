@@ -1,0 +1,136 @@
+/* ── New Post Page Styles ── */
+
+.newpost-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ── Preview area ── */
+.preview-area {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.preview-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+
+  .placeholder-icon {
+    font-size: 56px;
+    color: var(--text-secondary);
+    opacity: 0.4;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+/* ── Caption ── */
+.caption-section {
+  margin-bottom: 20px;
+
+  .caption-input {
+    --border-radius: 12px;
+    font-size: 15px;
+  }
+}
+
+/* ── Action grid ── */
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: var(--ig-pink);
+    box-shadow: 0 2px 12px rgba(204, 35, 102, 0.1);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+}
+
+.action-icon {
+  font-size: 28px;
+}
+
+.camera-icon {
+  color: var(--ig-pink);
+}
+
+.gallery-icon {
+  color: var(--ig-orange);
+}
+
+/* ── Publish button ── */
+.publish-btn {
+  --background: var(--ig-gradient);
+  --border-radius: 14px;
+  --box-shadow: 0 4px 16px rgba(204, 35, 102, 0.3);
+  font-weight: 700;
+  font-size: 16px;
+  height: 50px;
+  text-transform: none;
+  letter-spacing: 0.3px;
+
+  &[disabled] {
+    opacity: 0.5;
+    --box-shadow: none;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .newpost-container {
+    padding: 12px;
+  }
+
+  .action-card {
+    padding: 16px 8px;
+  }
+}

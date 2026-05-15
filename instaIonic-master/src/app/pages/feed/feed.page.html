@@ -1,14 +1,12 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar class="feed-toolbar">
     <ion-buttons slot="start">
-      <ion-button (click)="goNewPost()">
+      <ion-button (click)="goNewPost()" class="toolbar-btn">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <div class="toolbar-center">
-      <span class="feed-title">Feed</span>
-    </div>
+    <ion-title class="feed-title">Mini Instagram</ion-title>
 
     <ion-buttons slot="end">
       <div class="stories-circles">
@@ -20,13 +18,13 @@
           <div class="circle empty" *ngIf="!f"></div>
         </ng-container>
       </div>
-      <ion-button (click)="goFriends()">
+      <ion-button (click)="goFriends()" class="toolbar-btn">
         <ion-icon name="person-add"></ion-icon>
       </ion-button>
-      <ion-button (click)="goSettings()">
+      <ion-button (click)="goSettings()" class="toolbar-btn">
         <ion-icon name="settings-outline"></ion-icon>
       </ion-button>
-      <ion-button (click)="logout()">
+      <ion-button (click)="logout()" class="toolbar-btn">
         <ion-icon name="exit-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -34,61 +32,84 @@
 </ion-header>
 
 <ion-content>
+  <div class="feed-container">
 
-
-
-  <!-- posts -->
-  <ion-list *ngFor="let p of posts">
-    <ion-item lines="none">
-      <ion-avatar slot="start">
-        <img *ngIf="p.user?.profile?.avatar" [src]="base + p.user.profile.avatar" />
-        <img *ngIf="!p.user?.profile?.avatar" src="https://placehold.co/64x64?text=U" />
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ p.user?.profile?.username || p.user?.name }}</h2>
-        <p>{{ p.caption }}</p>
-      </ion-label>
-    </ion-item>
-
-    <img [src]="imgUrl(p.image)" style="width:100%;max-height:280px;object-fit:cover;" />
-
-    <ion-item>
-      <ion-button fill="clear" (click)="like(p)">
-        ❤️ Like ({{ p.likes?.length || 0 }})
+    <!-- Empty state -->
+    <div class="empty-state" *ngIf="posts.length === 0">
+      <ion-icon name="camera-outline" class="empty-icon"></ion-icon>
+      <h3>No hay publicaciones</h3>
+      <p>¡Sé el primero en compartir algo!</p>
+      <ion-button shape="round" (click)="goNewPost()" class="empty-btn">
+        <ion-icon name="camera-outline" slot="start"></ion-icon>
+        Crear publicación
       </ion-button>
-      <ion-button fill="clear" (click)="openComments(p)">
-        💬
+    </div>
+
+    <!-- Post cards -->
+    <div class="post-card" *ngFor="let p of posts">
+      <!-- Post header -->
+      <div class="post-header">
+        <div class="post-avatar" [style.background]="getAvatarColor(p.user?.name)">
+          <img *ngIf="p.user?.profile?.avatar" [src]="base + p.user.profile.avatar" />
+          <span *ngIf="!p.user?.profile?.avatar" class="avatar-initials">
+            {{ getInitials(p.user?.name) }}
+          </span>
+        </div>
+        <div class="post-user-info">
+          <span class="post-username">{{ p.user?.profile?.username || p.user?.name }}</span>
+          <span class="post-caption-inline" *ngIf="p.caption">{{ p.caption }}</span>
+        </div>
+      </div>
+
+      <!-- Post image -->
+      <div class="post-image-wrapper">
+        <img [src]="imgUrl(p.image)" class="post-image" loading="lazy" />
+      </div>
+
+      <!-- Post actions -->
+      <div class="post-actions">
+        <button class="action-btn like-btn" (click)="like(p)">
+          <span class="action-emoji">❤️</span>
+          <span class="action-count">{{ p.likes?.length || 0 }}</span>
+        </button>
+        <button class="action-btn comment-btn" (click)="openComments(p)">
+          <span class="action-emoji">💬</span>
+          <span class="action-label">Comentar</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Comments panel -->
+  <div class="comments-overlay" *ngIf="showComments" (click)="closeComments()"></div>
+  <div class="comments-panel" *ngIf="showComments">
+    <div class="comments-header">
+      <span class="comments-title">Comentarios</span>
+      <button class="comments-close" (click)="closeComments()">✕</button>
+    </div>
+
+    <div class="comments-list">
+      <div class="comment-item" *ngFor="let c of comments">
+        <span class="comment-author">{{ c.user?.profile?.username || c.user?.name }}</span>
+        <span class="comment-text">{{ c.content }}</span>
+      </div>
+      <div class="comment-empty" *ngIf="comments.length === 0">
+        No hay comentarios aún
+      </div>
+    </div>
+
+    <div class="comment-input-bar">
+      <ion-input
+        placeholder="Escribe un comentario..."
+        [(ngModel)]="newComment"
+        class="comment-input"
+        (keyup.enter)="sendComment()">
+      </ion-input>
+      <ion-button fill="clear" (click)="sendComment()" class="send-btn" [disabled]="!newComment.trim()">
+        Enviar
       </ion-button>
-    </ion-item>
-  </ion-list>
-
-
-
-  <!-- panel de comentarios -->
-  <div *ngIf="showComments"
-    style="position:fixed;bottom:0;left:0;right:0;top:25%;background:white;z-index:1000;box-shadow:0 -4px 12px rgba(0,0,0,.15);">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Comentarios</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="closeComments()">Cerrar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-list>
-        <ion-item *ngFor="let c of comments">
-          <ion-label>
-            <strong>{{ c.user?.profile?.username || c.user?.name }}</strong><br />
-            {{ c.content }}
-          </ion-label>
-        </ion-item>
-      </ion-list>
-      <ion-item>
-        <ion-input placeholder="Escribe un comentario..." [(ngModel)]="newComment"></ion-input>
-        <ion-button (click)="sendComment()">Enviar</ion-button>
-      </ion-item>
-    </ion-content>
+    </div>
   </div>
 
 </ion-content>

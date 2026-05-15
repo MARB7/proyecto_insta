@@ -1,80 +1,89 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Amigos</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/feed"></ion-back-button>
     </ion-buttons>
+    <ion-title>Amigos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="friends-container">
 
-  <!-- Buscador por nombre -->
-  <ion-searchbar
-    placeholder="Buscar usuario por nombre..."
-    (ionInput)="onSearch($event)"
-    [debounce]="300"
-  ></ion-searchbar>
+    <!-- Search -->
+    <ion-searchbar
+      placeholder="Buscar usuario por nombre..."
+      (ionInput)="onSearch($event)"
+      [debounce]="300"
+      class="search-bar">
+    </ion-searchbar>
 
-  <!-- Mensaje de estado -->
-  <ion-item *ngIf="message" lines="none">
-    <ion-label [color]="messageColor" class="ion-text-wrap">
+    <!-- Status message -->
+    <div class="status-msg" *ngIf="message" [class.success]="messageColor === 'success'" [class.error]="messageColor === 'danger'">
       {{ message }}
-    </ion-label>
-  </ion-item>
+    </div>
 
-  <!-- Resultados de búsqueda -->
-  <ion-list *ngIf="searchResults.length > 0">
-    <ion-item lines="full">
-      <ion-label><strong>Resultados</strong></ion-label>
-    </ion-item>
-    <ion-item *ngFor="let user of searchResults">
-      <ion-icon name="person-add" slot="start" color="primary"></ion-icon>
-      <ion-label>
-        <h2>{{ user.name }}</h2>
-        <p>{{ user.email }}</p>
-      </ion-label>
-      <ion-button size="small" color="primary" (click)="sendRequest(user)">
-        Agregar
-      </ion-button>
-    </ion-item>
-  </ion-list>
+    <!-- Search results -->
+    <div class="section" *ngIf="searchResults.length > 0">
+      <div class="section-header">
+        <span class="section-title">Resultados</span>
+      </div>
+      <div class="user-card" *ngFor="let user of searchResults">
+        <div class="user-avatar search-avatar">
+          <ion-icon name="person-add"></ion-icon>
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ user.name }}</span>
+          <span class="user-email">{{ user.email }}</span>
+        </div>
+        <ion-button size="small" shape="round" (click)="sendRequest(user)" class="add-btn">
+          Agregar
+        </ion-button>
+      </div>
+    </div>
 
-  <!-- Solicitudes pendientes -->
-  <ion-list>
-    <ion-item lines="full">
-      <ion-label><strong>Pendientes</strong></ion-label>
-      <ion-badge color="warning" slot="end" *ngIf="pending.length > 0">{{ pending.length }}</ion-badge>
-    </ion-item>
-    <ion-item *ngFor="let r of pending">
-      <ion-label>
-        {{ r.user?.profile?.username || r.user?.name }}
-      </ion-label>
-      <ion-button size="small" color="success" (click)="accept(r)">
-        <ion-icon name="checkmark-circle" slot="start"></ion-icon>
-        Aceptar
-      </ion-button>
-    </ion-item>
-    <ion-item *ngIf="pending.length === 0">
-      <ion-label color="medium">No hay solicitudes pendientes</ion-label>
-    </ion-item>
-  </ion-list>
+    <!-- Pending requests -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Solicitudes pendientes</span>
+        <span class="section-badge" *ngIf="pending.length > 0">{{ pending.length }}</span>
+      </div>
+      <div class="user-card" *ngFor="let r of pending">
+        <div class="user-avatar pending-avatar">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ r.user?.profile?.username || r.user?.name }}</span>
+          <span class="user-email">Quiere ser tu amigo</span>
+        </div>
+        <ion-button size="small" shape="round" color="success" (click)="accept(r)" class="accept-btn">
+          <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+          Aceptar
+        </ion-button>
+      </div>
+      <div class="empty-msg" *ngIf="pending.length === 0">
+        No hay solicitudes pendientes
+      </div>
+    </div>
 
-  <!-- Amigos -->
-  <ion-list>
-    <ion-item lines="full">
-      <ion-label><strong>Mis Amigos</strong></ion-label>
-      <ion-badge color="primary" slot="end" *ngIf="friends.length > 0">{{ friends.length }}</ion-badge>
-    </ion-item>
-    <ion-item *ngFor="let f of friends">
-      <ion-icon name="people" slot="start" color="success"></ion-icon>
-      <ion-label>
-        {{ f.profile?.username || f.name }}
-      </ion-label>
-    </ion-item>
-    <ion-item *ngIf="friends.length === 0">
-      <ion-label color="medium">Aún no tienes amigos, ¡busca y agrega!</ion-label>
-    </ion-item>
-  </ion-list>
+    <!-- Friends list -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Mis Amigos</span>
+        <span class="section-badge friends-badge" *ngIf="friends.length > 0">{{ friends.length }}</span>
+      </div>
+      <div class="user-card" *ngFor="let f of friends">
+        <div class="user-avatar friend-avatar">
+          <ion-icon name="people"></ion-icon>
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ f.profile?.username || f.name }}</span>
+        </div>
+      </div>
+      <div class="empty-msg" *ngIf="friends.length === 0">
+        Aún no tienes amigos, ¡busca y agrega!
+      </div>
+    </div>
 
+  </div>
 </ion-content>
