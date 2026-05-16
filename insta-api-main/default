@@ -7,10 +7,49 @@ server {
 
     charset utf-8;
 
+    # ── Upload limits ──
     client_max_body_size 32M;
 
+    # ── Security headers ──
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+
+    # ── Gzip compression ──
+    gzip on;
+    gzip_comp_level 5;
+    gzip_min_length 256;
+    gzip_proxied any;
+    gzip_vary on;
+    gzip_types
+        application/json
+        application/javascript
+        application/xml
+        text/css
+        text/plain
+        text/xml
+        image/svg+xml;
+
+    # ── Main location ──
     location / {
         try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # ── Static file caching ──
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|woff2|woff|svg|webp)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # ── Storage files (avatars, posts) ──
+    location /storage/ {
+        alias /home/site/wwwroot/storage/app/public/;
+        expires 7d;
+        add_header Cache-Control "public";
+        access_log off;
     }
 
     location = /favicon.ico { access_log off; log_not_found off; }
@@ -18,13 +57,18 @@ server {
 
     error_page 404 /index.php;
 
+    # ── PHP-FPM ──
     location ~ \.php$ {
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
         fastcgi_hide_header X-Powered-By;
+        fastcgi_read_timeout 300;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
     }
 
+    # ── Block hidden files ──
     location ~ /\.(?!well-known).* {
         deny all;
     }

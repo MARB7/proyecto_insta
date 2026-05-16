@@ -19,12 +19,17 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [
-        'http://localhost:8100',   // Ionic dev server
-        'http://localhost:4200',   // Angular dev server
-        'http://127.0.0.1:8100',
-        'http://127.0.0.1:4200',
-    ],
+    'allowed_origins' => array_filter(array_merge(
+        // ── Development origins ──
+        app()->environment('local') ? [
+            'http://localhost:8100',
+            'http://localhost:4200',
+            'http://127.0.0.1:8100',
+            'http://127.0.0.1:4200',
+        ] : [],
+        // ── Production origins (from .env CORS_ALLOWED_ORIGINS) ──
+        array_map('trim', explode(',', env('CORS_ALLOWED_ORIGINS', '')))
+    )),
 
     'allowed_origins_patterns' => [],
 

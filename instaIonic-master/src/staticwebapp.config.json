@@ -1,17 +1,38 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/assets/*", "/*.ico", "/*.png", "/*.js", "/*.css", "/*.woff2"]
+    "exclude": [
+      "/assets/*",
+      "/*.ico",
+      "/*.png",
+      "/*.jpg",
+      "/*.js",
+      "/*.css",
+      "/*.woff2",
+      "/*.woff",
+      "/*.svg",
+      "/*.webp",
+      "/*.map"
+    ]
   },
   "globalHeaders": {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
     "Referrer-Policy": "strict-origin-when-cross-origin",
-    "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.azurewebsites.net; connect-src 'self' https://*.azurewebsites.net;"
   },
   "mimeTypes": {
     ".json": "application/json",
     ".woff2": "font/woff2",
-    ".woff": "font/woff"
+    ".woff": "font/woff",
+    ".webp": "image/webp"
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/index.html",
+      "statusCode": 200
+    }
   }
 }

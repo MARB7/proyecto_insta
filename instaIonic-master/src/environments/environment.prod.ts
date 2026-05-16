@@ -1,7 +1,14 @@
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  Ionic — Production Environment (Azure Static Web Apps)        ║
+// ║                                                                 ║
+// ║  INSTRUCTIONS:                                                  ║
+// ║  Replace "REPLACE_BACKEND_NAME" with your actual Azure          ║
+// ║  App Service name before running `ng build --configuration      ║
+// ║  production`                                                    ║
+// ╚══════════════════════════════════════════════════════════════════╝
+
 export const environment = {
   production: true,
-  // ── Azure deployment URLs ──
-  // Replace these with your actual Azure App Service URLs before deploying
-  apiUrl: 'https://YOUR-BACKEND-APP.azurewebsites.net/api/',
-  storageUrl: 'https://YOUR-BACKEND-APP.azurewebsites.net/storage/'
+  apiUrl: 'https://REPLACE_BACKEND_NAME.azurewebsites.net/api/',
+  storageUrl: 'https://REPLACE_BACKEND_NAME.azurewebsites.net/storage/'
 };
