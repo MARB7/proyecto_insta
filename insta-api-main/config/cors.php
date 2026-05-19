@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => array_filter(array_merge(
         // ── Development origins ──
-        app()->environment('local') ? [
+        env('APP_ENV') === 'local' ? [
             'http://localhost:8100',
             'http://localhost:4200',
             'http://127.0.0.1:8100',
