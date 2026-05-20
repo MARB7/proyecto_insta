@@ -1,14 +1,12 @@
 // ╔══════════════════════════════════════════════════════════════════╗
-// ║  Ionic — Production Environment (Azure Static Web Apps)        ║
+// ║  Ionic — Production Environment (Azure VM)                     ║
 // ║                                                                 ║
-// ║  INSTRUCTIONS:                                                  ║
-// ║  Replace "REPLACE_BACKEND_NAME" with your actual Azure          ║
-// ║  App Service name before running `ng build --configuration      ║
-// ║  production`                                                    ║
+// ║  This configuration file points all frontend API and storage    ║
+// ║  requests to your Microsoft Azure Virtual Machine public IP.    ║
 // ╚══════════════════════════════════════════════════════════════════╝
 
 export const environment = {
   production: true,
-  apiUrl: 'https://REPLACE_BACKEND_NAME.azurewebsites.net/api/',
-  storageUrl: 'https://REPLACE_BACKEND_NAME.azurewebsites.net/storage/'
+  apiUrl: 'http://4.248.186.178:8000/api/',
+  storageUrl: 'http://4.248.186.178:8000/storage/'
 };
